@@ -1,0 +1,42 @@
+query eventTable($take: Int, $skip: Int!, $orderBy: [EventOrderByInput!]!) {
+  events(take: $take, skip: $skip orderBy: $orderBy)  {
+    id
+  eventNo
+  eventCategory  
+  startDate
+  status
+  endDate
+  vehiclesCount
+  location {
+    name
+  }
+  seller {
+    name
+  }
+  Report
+  participantsCount
+  }
+}
+
+
+query EventsbyCategory($where: EventWhereInput!) {
+  events(where: $where) {
+     id
+  eventNo
+ 
+
+  status
+
+  vehiclesCount
+  location {
+    state {
+      name
+    }
+    name
+  }
+
+  Report
+  participantsCount
+  }
+  }
+

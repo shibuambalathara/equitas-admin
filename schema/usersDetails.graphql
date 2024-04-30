@@ -1,0 +1,59 @@
+query Users($skip: Int!, $take: Int, $orderBy: [UserOrderByInput!]!) {
+  users(skip: $skip, take: $take, orderBy: $orderBy) {
+    firstName
+    lastName
+    email
+    mobile
+    status
+    state
+    role
+    idNo
+    id
+     pancardNo
+     activeBidsCount
+     createdAt
+     currentVehicleBuyingLimit {
+    vehicleBuyingLimit  
+    }
+paymentsCount
+ coupenDetailCount
+ tempToken
+  }
+ 
+}
+query UserbyIdNo($where: UserWhereUniqueInput!) {
+  user(where: $where) {
+    id
+  }
+}
+
+query bidUser($where: UserWhereUniqueInput!) {
+  user(where: $where) {
+    firstName
+    lastName
+    activeBidsCount
+    username
+  }
+}
+query UsersSearch($where: UserWhereInput!) {
+  users(where: $where) {
+        firstName
+    lastName
+    email
+    mobile
+    status
+    state
+    role
+    idNo
+    id
+     pancardNo
+     activeBidsCount
+     createdAt
+     tempToken
+     currentVehicleBuyingLimit {
+    vehicleBuyingLimit  
+    }
+paymentsCount
+ coupenDetailCount
+  }
+}

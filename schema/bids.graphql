@@ -1,0 +1,102 @@
+query BidsTable {
+  bids {
+  id
+  amount
+  name 
+  createdAt
+  updatedAt
+
+    bidVehicle {
+    id
+    registrationNumber
+  }
+  user {
+    firstName
+    lastName
+    id
+  }
+
+}
+}
+
+
+query BidDetailsPerVehicle($where: VehicleWhereUniqueInput!) {
+  vehicle(where: $where) {
+    id
+    make
+    model
+    registrationNumber
+    vehicleIndexNo
+        userVehicleBidsCount
+    vehicleEventStatus
+    watchedByCount
+    bidStatus
+    yardLocation
+    event {
+  eventNo
+   seller {
+    name
+    
+  }
+}
+    userVehicleBids {
+    amount
+    id
+    createdAt
+  
+      user {
+      id
+      idNo
+      firstName
+      lastName
+      mobile
+      tempToken
+      }
+    }
+    
+    currentBidAmount
+    currentBidUser {
+    id  
+    idNo 
+    username
+    firstName
+    lastName
+    tempToken
+    }
+
+  
+  }
+}
+mutation updateBid($where: BidWhereUniqueInput!, $data: BidUpdateInput!) {
+  updateBid(where: $where, data: $data) {
+    id
+    user {
+      idNo
+    }
+    
+  }
+}
+
+mutation DeleteBid($where: BidWhereUniqueInput!) {
+  deleteBid(where: $where) {
+    id
+  }
+}
+mutation deletedBiddata($data: DeletedBidCreateInput!) {
+  createDeletedBid(data: $data) {
+    id
+  }
+}
+query DeletedBidsperVehicle($where: DeletedBidWhereInput!) {
+  deletedBids(where: $where) {
+    amount
+    user {
+      id
+      firstName
+      lastName
+      mobile
+idNo
+    }
+    
+  }
+}

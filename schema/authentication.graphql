@@ -1,0 +1,26 @@
+mutation Login($mobile: String!, $password: String!) {
+  authenticateUserWithPassword(mobile: $mobile, password: $password) {
+    ... on UserAuthenticationWithPasswordSuccess {
+      sessionToken
+  item {
+        id
+        firstName
+        lastName
+        role
+      }
+    }
+    ... on UserAuthenticationWithPasswordFailure {
+      message
+    }
+  }
+}
+query Userauthentication {
+  authenticatedItem {
+    ... on User {
+      username
+      role
+      state
+      city
+    }
+  }
+}

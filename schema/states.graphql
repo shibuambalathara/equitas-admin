@@ -1,0 +1,36 @@
+query states {
+  states {
+    name
+    id
+    users {
+      id
+      firstName
+    }
+    locations {
+      name
+    }
+  }
+}
+query State($where: StateWhereUniqueInput!) {
+  state(where: $where) {
+name
+  }
+}
+
+
+mutation CreateState($data: StateCreateInput!) {
+    createState(data: $data) {
+      name
+    }
+  }
+  mutation DeleteState($where: StateWhereUniqueInput!) {
+  deleteState(where: $where) {
+  id  
+  name
+  }
+}
+mutation UpdateState($where: StateWhereUniqueInput!, $data: StateUpdateInput!) {
+  updateState(where: $where, data: $data) {
+  id  
+  }
+}

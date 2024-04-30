@@ -1,0 +1,83 @@
+
+
+
+mutation CreateEmdUpdate($data: EmdUpdateCreateInput!) {
+  createEmdUpdate(data: $data) {
+    id
+  payment {
+    id
+  }
+  vehicleBuyingLimitIncrement  
+  }
+}
+
+query emdTable {
+  emdUpdates {
+    id
+    emdNo
+    specialVehicleBuyingLimitIncrement
+    vehicleBuyingLimitIncrement
+      user {
+    id
+    firstName
+    lastName
+  }
+   createdAt
+    updatedAt
+  createdBy {
+    id
+    firstName
+    lastName
+  }
+  }
+}
+
+query EmdUpdate($where: EmdUpdateWhereUniqueInput!) {
+  emdUpdate(where: $where) {
+  id
+  emdNo
+  vehicleBuyingLimitIncrement
+  payment {
+    amount
+      image {
+      url
+    }
+  }
+  user {
+    id
+    firstName
+    username
+  }  
+  }
+}
+query EmdUpdatesPerPayment($where: EmdUpdateWhereInput!) {
+  emdUpdates(where: $where) {
+    emdNo
+    id
+    payment {
+      id
+      amount
+       coupenDetail {
+        coupenNumber
+        createdAt
+      }
+    }
+    user {
+      mobile
+      firstName
+      lastName
+    }
+   vehicleBuyingLimitIncrement
+    createdBy {
+      firstName
+    }
+
+  }
+}
+
+mutation DeleteEmdUpdate($where: EmdUpdateWhereUniqueInput!) {
+  deleteEmdUpdate(where: $where) {
+  id
+    emdNo
+  }
+}

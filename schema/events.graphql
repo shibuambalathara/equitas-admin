@@ -1,0 +1,127 @@
+query Event($where: EventWhereUniqueInput!) {
+  event(where: $where) {
+    id
+    eventCategory
+    startDate
+    endDate
+    seller {
+      name
+      id
+    }
+    eventType {
+      name
+      id
+    }
+    location {
+      name
+      id
+    }
+    noOfBids
+    status
+    downloadableFile {
+      url
+      
+    }
+
+    termsAndConditions
+    bidLock
+    isSpecialEvent
+    extraTime
+    extraTimeTrigerIn
+    vehicleLiveTimeIn
+    gapInBetweenVehicles
+    vehiclesCount
+  }
+ 
+}
+
+
+query eventsReport( $where: EventWhereInput!) {
+  events(where: $where)  {
+    id
+   vehiclesCount
+    eventCategory
+    startDate
+    endDate
+    Report
+    seller {
+      name
+      
+    }
+    location {
+      name
+      id
+    }
+    noOfBids
+    status
+    eventNo
+
+  }
+}
+query EventsIdNo {
+  events {
+  id 
+  eventNo  
+  }
+}
+query Participants($where: EventWhereUniqueInput!, $take: Int, $skip: Int!, $coupenDetailWhere2: CoupenWhereInput!) {
+  event(where: $where) {
+    eventNo
+    participants(take: $take, skip: $skip) {
+    id
+    firstName
+    vehicleBuyingLimit  
+  bannedSellersCount
+
+  categoryCount
+  state
+
+
+  createdAt
+  dealerId
+  email
+  emdUpdatesByAdminCount
+  emdUpdatesCount
+  id
+  idNo
+  idProofNo
+
+
+  
+
+  lastName
+
+  mobile
+
+  pancardNo
+
+   paymentsCount
+tempToken
+   role
+
+    currentVehicleBuyingLimit {
+    vehicleBuyingLimit
+  }
+   username
+    status
+    updatedAt
+    activeBidsCount
+    coupenDetailCount
+    coupenDetail(where: $coupenDetailWhere2) {
+      coupenNumber
+    }
+   
+    }
+  }
+}
+
+mutation UpdateEvent($where: EventWhereUniqueInput!, $data: EventUpdateInput!) {
+  updateEvent(where: $where, data: $data) {
+  id
+  }
+}
+mutation DeleteEvent($where: EventWhereUniqueInput!) {
+  deleteEvent(where: $where) {
+  id  
+  }
+}

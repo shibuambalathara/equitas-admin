@@ -1,0 +1,45 @@
+query locations {
+  locations {
+    name
+    id
+    country
+    state {
+      name
+    }
+  }
+}
+
+query Location($where: LocationWhereInput!) {
+  locations(where: $where) {
+    id
+name
+  }
+}
+
+
+mutation addLocation($data: LocationCreateInput!) {
+  createLocation(data: $data) {
+    city
+    name
+    country
+  state {
+    name
+    id
+  }
+  }
+
+}
+
+mutation updateLocation($where: LocationWhereUniqueInput!, $data: LocationUpdateInput!) {
+  updateLocation(where: $where, data: $data) {
+    id
+    name
+  }
+}
+
+mutation DeleteLocation($where: LocationWhereUniqueInput!) {
+  deleteLocation(where: $where) {
+    id
+    name
+  }
+}

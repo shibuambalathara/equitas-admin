@@ -1,0 +1,40 @@
+query VehicleDetailsPerEvent($where: EventWhereUniqueInput!) {
+  event(where: $where) {
+  id 
+  status
+  eventNo
+  endDate
+  vehiclesCount
+  eventCategory
+  vehicles {
+    bidStartTime
+    bidTimeExpire
+    id
+    vehicleIndexNo 
+    registrationNumber
+    totalBids
+    frontImage
+    vehicleEventStatus
+    bidStatus
+state
+city
+currentBidAmount
+createdAt
+    currentBidUser {
+      id
+    firstName
+    lastName 
+    mobile
+currentVehicleBuyingLimit {
+  vehicleBuyingLimit
+}
+    }
+      coupenDetail {
+      coupenNumber
+    }
+  } 
+   seller {
+    name
+  } 
+  }
+}
