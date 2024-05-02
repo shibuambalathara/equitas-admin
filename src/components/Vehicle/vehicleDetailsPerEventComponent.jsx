@@ -184,8 +184,7 @@ Swal.fire({
 
               )
           },
-          { Header: "State", accessor: "state" },
-         { Header: "City", accessor: "city" },
+      
       
          
           { Header: "Bid Status", accessor: "bidStatus" },
@@ -207,12 +206,7 @@ Swal.fire({
             )
         },
 
-          {
-              Header:"Have Image?",
-              Cell:({row})=>(
-                row.original.frontImage.startsWith("http")?"Yes":"No"
-              )
-          },
+         
 
      
 
@@ -253,14 +247,26 @@ Swal.fire({
                 Cell: ({ row }) =>   FormatDate(row.original.createdAt)  
 
             },
-              {
-                Header:"link",
-                Cell: ({ row }) => (
-                  <a href={`${process.env.REACT_APP_CLIENT_URL}/${row.original.id}`} target="_blank" rel="noopener noreferrer" >{process.env.REACT_APP_CLIENT_URL}/{row.original.id}</a>
-                )
-            },
-        ])
-          
+            { Header: "Loan Agreement No", accessor: "loanAgreementNo" },
+         
+        ]),
+        { Header: "State", accessor: "state" },
+        { Header: "City", accessor: "city" },
+        {
+          Header:"Have Image?",
+          Cell:({row})=>(
+            row.original.frontImage.startsWith("http")?"Yes":"No"
+          )
+      },
+      
+      { Header: "Current Top Bid", accessor: "currentBidAmount" },
+
+      {
+        Header:"link",
+        Cell: ({ row }) => (
+          <a href={`${process.env.REACT_APP_CLIENT_URL}/${row.original.id}`} target="_blank" rel="noopener noreferrer" >{process.env.REACT_APP_CLIENT_URL}/{row.original.id}</a>
+        )
+    },
         ],
         [coupens,userId,data]
       );

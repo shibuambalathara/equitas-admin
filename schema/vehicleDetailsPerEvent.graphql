@@ -20,6 +20,11 @@ state
 city
 currentBidAmount
 createdAt
+   loanAgreementNo
+      registeredOwnerName
+      make
+      yearOfManufacture
+      currentBidAmount
     currentBidUser {
       id
     firstName
