@@ -1545,6 +1545,8 @@ export type Mutation = {
   createNotifications?: Maybe<Array<Maybe<Notification>>>;
   createPayment?: Maybe<Payment>;
   createPayments?: Maybe<Array<Maybe<Payment>>>;
+  createSelectedVehicle?: Maybe<SelectedVehicle>;
+  createSelectedVehicles?: Maybe<Array<Maybe<SelectedVehicle>>>;
   createSellACar?: Maybe<SellACar>;
   createSellACars?: Maybe<Array<Maybe<SellACar>>>;
   createSeller?: Maybe<Seller>;
@@ -1583,6 +1585,8 @@ export type Mutation = {
   deleteNotifications?: Maybe<Array<Maybe<Notification>>>;
   deletePayment?: Maybe<Payment>;
   deletePayments?: Maybe<Array<Maybe<Payment>>>;
+  deleteSelectedVehicle?: Maybe<SelectedVehicle>;
+  deleteSelectedVehicles?: Maybe<Array<Maybe<SelectedVehicle>>>;
   deleteSellACar?: Maybe<SellACar>;
   deleteSellACars?: Maybe<Array<Maybe<SellACar>>>;
   deleteSeller?: Maybe<Seller>;
@@ -1624,6 +1628,8 @@ export type Mutation = {
   updateNotifications?: Maybe<Array<Maybe<Notification>>>;
   updatePayment?: Maybe<Payment>;
   updatePayments?: Maybe<Array<Maybe<Payment>>>;
+  updateSelectedVehicle?: Maybe<SelectedVehicle>;
+  updateSelectedVehicles?: Maybe<Array<Maybe<SelectedVehicle>>>;
   updateSellACar?: Maybe<SellACar>;
   updateSellACars?: Maybe<Array<Maybe<SellACar>>>;
   updateSeller?: Maybe<Seller>;
@@ -1777,6 +1783,16 @@ export type MutationCreatePaymentArgs = {
 
 export type MutationCreatePaymentsArgs = {
   data: Array<PaymentCreateInput>;
+};
+
+
+export type MutationCreateSelectedVehicleArgs = {
+  data: SelectedVehicleCreateInput;
+};
+
+
+export type MutationCreateSelectedVehiclesArgs = {
+  data: Array<SelectedVehicleCreateInput>;
 };
 
 
@@ -1967,6 +1983,16 @@ export type MutationDeletePaymentArgs = {
 
 export type MutationDeletePaymentsArgs = {
   where: Array<PaymentWhereUniqueInput>;
+};
+
+
+export type MutationDeleteSelectedVehicleArgs = {
+  where: SelectedVehicleWhereUniqueInput;
+};
+
+
+export type MutationDeleteSelectedVehiclesArgs = {
+  where: Array<SelectedVehicleWhereUniqueInput>;
 };
 
 
@@ -2181,6 +2207,17 @@ export type MutationUpdatePaymentArgs = {
 
 export type MutationUpdatePaymentsArgs = {
   data: Array<PaymentUpdateArgs>;
+};
+
+
+export type MutationUpdateSelectedVehicleArgs = {
+  data: SelectedVehicleUpdateInput;
+  where: SelectedVehicleWhereUniqueInput;
+};
+
+
+export type MutationUpdateSelectedVehiclesArgs = {
+  data: Array<SelectedVehicleUpdateArgs>;
 };
 
 
@@ -2544,6 +2581,9 @@ export type Query = {
   payment?: Maybe<Payment>;
   payments?: Maybe<Array<Payment>>;
   paymentsCount?: Maybe<Scalars['Int']>;
+  selectedVehicle?: Maybe<SelectedVehicle>;
+  selectedVehicles?: Maybe<Array<SelectedVehicle>>;
+  selectedVehiclesCount?: Maybe<Scalars['Int']>;
   sellACar?: Maybe<SellACar>;
   sellACars?: Maybe<Array<SellACar>>;
   sellACarsCount?: Maybe<Scalars['Int']>;
@@ -2823,6 +2863,24 @@ export type QueryPaymentsCountArgs = {
 };
 
 
+export type QuerySelectedVehicleArgs = {
+  where: SelectedVehicleWhereUniqueInput;
+};
+
+
+export type QuerySelectedVehiclesArgs = {
+  orderBy?: Array<SelectedVehicleOrderByInput>;
+  skip?: Scalars['Int'];
+  take?: InputMaybe<Scalars['Int']>;
+  where?: SelectedVehicleWhereInput;
+};
+
+
+export type QuerySelectedVehiclesCountArgs = {
+  where?: SelectedVehicleWhereInput;
+};
+
+
 export type QuerySellACarArgs = {
   where: SellACarWhereUniqueInput;
 };
@@ -2968,6 +3026,42 @@ export type RedeemUserMagicAuthTokenSuccess = {
   __typename?: 'RedeemUserMagicAuthTokenSuccess';
   item: User;
   token: Scalars['String'];
+};
+
+export type SelectedVehicle = {
+  __typename?: 'SelectedVehicle';
+  id: Scalars['ID'];
+  vehicleIds?: Maybe<Scalars['String']>;
+};
+
+export type SelectedVehicleCreateInput = {
+  vehicleIds?: InputMaybe<Scalars['String']>;
+};
+
+export type SelectedVehicleOrderByInput = {
+  id?: InputMaybe<OrderDirection>;
+  vehicleIds?: InputMaybe<OrderDirection>;
+};
+
+export type SelectedVehicleUpdateArgs = {
+  data: SelectedVehicleUpdateInput;
+  where: SelectedVehicleWhereUniqueInput;
+};
+
+export type SelectedVehicleUpdateInput = {
+  vehicleIds?: InputMaybe<Scalars['String']>;
+};
+
+export type SelectedVehicleWhereInput = {
+  AND?: InputMaybe<Array<SelectedVehicleWhereInput>>;
+  NOT?: InputMaybe<Array<SelectedVehicleWhereInput>>;
+  OR?: InputMaybe<Array<SelectedVehicleWhereInput>>;
+  id?: InputMaybe<IdFilter>;
+  vehicleIds?: InputMaybe<StringFilter>;
+};
+
+export type SelectedVehicleWhereUniqueInput = {
+  id?: InputMaybe<Scalars['ID']>;
 };
 
 export type SellACar = {
@@ -5196,6 +5290,13 @@ export type UpdateStateMutationVariables = Exact<{
 
 
 export type UpdateStateMutation = { __typename?: 'Mutation', updateState?: { __typename?: 'State', id: string } | null };
+
+export type SelectedVehiclesMutationVariables = Exact<{
+  data: SelectedVehicleCreateInput;
+}>;
+
+
+export type SelectedVehiclesMutation = { __typename?: 'Mutation', createSelectedVehicle?: { __typename?: 'SelectedVehicle', id: string, vehicleIds?: string | null } | null };
 
 export type UserQueryVariables = Exact<{
   where: UserWhereUniqueInput;
@@ -8869,6 +8970,40 @@ export function useUpdateStateMutation(baseOptions?: Apollo.MutationHookOptions<
 export type UpdateStateMutationHookResult = ReturnType<typeof useUpdateStateMutation>;
 export type UpdateStateMutationResult = Apollo.MutationResult<UpdateStateMutation>;
 export type UpdateStateMutationOptions = Apollo.BaseMutationOptions<UpdateStateMutation, UpdateStateMutationVariables>;
+export const SelectedVehiclesDocument = gql`
+    mutation SelectedVehicles($data: SelectedVehicleCreateInput!) {
+  createSelectedVehicle(data: $data) {
+    id
+    vehicleIds
+  }
+}
+    `;
+export type SelectedVehiclesMutationFn = Apollo.MutationFunction<SelectedVehiclesMutation, SelectedVehiclesMutationVariables>;
+
+/**
+ * __useSelectedVehiclesMutation__
+ *
+ * To run a mutation, you first call `useSelectedVehiclesMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSelectedVehiclesMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [selectedVehiclesMutation, { data, loading, error }] = useSelectedVehiclesMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useSelectedVehiclesMutation(baseOptions?: Apollo.MutationHookOptions<SelectedVehiclesMutation, SelectedVehiclesMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SelectedVehiclesMutation, SelectedVehiclesMutationVariables>(SelectedVehiclesDocument, options);
+      }
+export type SelectedVehiclesMutationHookResult = ReturnType<typeof useSelectedVehiclesMutation>;
+export type SelectedVehiclesMutationResult = Apollo.MutationResult<SelectedVehiclesMutation>;
+export type SelectedVehiclesMutationOptions = Apollo.BaseMutationOptions<SelectedVehiclesMutation, SelectedVehiclesMutationVariables>;
 export const UserDocument = gql`
     query User($where: UserWhereUniqueInput!) {
   user(where: $where) {

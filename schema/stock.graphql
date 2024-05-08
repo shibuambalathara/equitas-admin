@@ -1,0 +1,6 @@
+mutation SelectedVehicles($data: SelectedVehicleCreateInput!) {
+  createSelectedVehicle(data: $data) {
+    id
+vehicleIds
+  }
+}

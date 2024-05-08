@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo } from 'react'
 import {  useNavigate } from 'react-router-dom'
 import { useUserauthenticationQuery, useVehicleByEventQuery, useVehicleDetailsPerEventQuery } from '../utils/graphql'
-import TableComponent from '../components/utils/table'
 import ViewStockComponent from '../components/stock/viewStockComponent';
 import StockTableComponent from '../components/stock/viewStockAdmin';
 
