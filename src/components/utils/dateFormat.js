@@ -25,6 +25,5 @@ const createdDate=new Date(date)
 
 
  const daysDifference = Math.floor(timeDifferenceMs / (1000 * 60 * 60 * 24));
- console.log("Number of days since createdAt:",currentDate,"date",daysDifference);
  return daysDifference
 }

@@ -4,7 +4,7 @@
 
 import React, {  useEffect, useMemo,useState } from 'react'
 import { useParams} from 'react-router-dom'
-import { useCoupensperUserQuery, useDeleteVehicleMutation, useUpdateCoupenMutation, useUpdateEventMutation, useUpdateVehicleMutation, useVehicleDetailsPerEventQuery} from '../../utils/graphql'
+import { useCoupensperUserQuery, useDeleteVehicleMutation, useSelectedVehiclesMutation, useUpdateCoupenMutation, useUpdateEventMutation, useUpdateVehicleMutation, useVehicleDetailsPerEventQuery} from '../../utils/graphql'
 import format from 'date-fns/format'
 import Swal from "sweetalert2";
 
@@ -31,7 +31,12 @@ const VehicleDetailsPerEventComponent = () => {
     const[updateEventEndTime]=useUpdateEventMutation()
     const [updateBidTime]=useUpdateVehicleMutation()
     const [updateCoupen]=useUpdateCoupenMutation()
+const [storeSelectedVehicles]=useSelectedVehiclesMutation()
+
     const [enable,setEnable]=useState(false)
+
+    const [selectedVehicleIds, setSelectedRowIds] = useState([]);
+    console.log("selected vehicles id",selectedVehicleIds)
     
     
     const [DeleteVehicle]=useDeleteVehicleMutation();
@@ -264,7 +269,7 @@ Swal.fire({
       {
         Header:"link",
         Cell: ({ row }) => (
-          <a href={`${process.env.REACT_APP_CLIENT_URL}/${row.original.id}`} target="_blank" rel="noopener noreferrer" >{process.env.REACT_APP_CLIENT_URL}/{row.original.id}</a>
+          <a href={`${process.env.REACT_APP_CLIENT_URL}/stock/${row.original.id}`} target="_blank" rel="noopener noreferrer" >{process.env.REACT_APP_CLIENT_URL}/stock/{row.original.id}</a>
         )
     },
         ],
@@ -282,6 +287,19 @@ Swal.fire({
           clearInterval(intervalId);
         };
       }, []);
+
+      // link for stocks
+      const handleGenerateLink=async()=>{
+        if(selectedVehicleIds!=''){
+console.log("selectedVehicleIds",selectedVehicleIds)
+      const response=await    storeSelectedVehicles({variables:{data:{vehicleIds:[selectedVehicleIds].toString()}}})
+      console.log("respones",response)
+      response?.data?.createSelectedVehicle?.id && Swal.fire({title:"The Stock Link is",text:`${process.env.REACT_APP_CLIENT_URL}/stocks/${response?.data?.createSelectedVehicle?.id}`,icon:'success'})
+        }
+        else{
+          Swal.fire({text:"Please Select Atleast  One Vehicle",icon:'warning'})
+        }
+      }
     
     
       if (loading) return <p>Loading...</p>;
@@ -290,11 +308,13 @@ Swal.fire({
 
   return (
     <div className="flex  flex-col  justify-around ">
+<div className='flex'>
 
-    
+<button onClick={handleGenerateLink} className='btn w-fit justify-end bg-white text-black'> Generate Link</button>
+</div>
     <div className=" flex flex-col  justify-center  ">
     <div className="mb-2 ">
-  <div className="text-center font-extrabold my-5 text-lg min-w-full">  Vehicle Data Table of Event No {data?.event?.eventNo} </div>
+ {data?.event?.eventCategory!='stock'? <div className="text-center font-extrabold my-5 text-lg min-w-full">  Vehicle Data Table of Event No {data?.event?.eventNo} </div>:<div className="text-center font-extrabold my-5 text-lg min-w-full">  Vehicle Data Table of Stock No {data?.event?.eventNo}</div>}
   
    
      <div className='flex justify-between'>
@@ -325,7 +345,7 @@ Swal.fire({
 {updateDate?.date &&<UpdateBidTime currentDate={updateDate?.date} handleChangeStartTime={handleChangeStartTime}/>}
 {enable && <UpdateEventEndTime handleChangeEndTime={handleChangeEndTime}/>}
 
-      <TableComponent tableData={data?.event?.vehicles} columns={columns} sortBy='Bid Time Expire' />
+      <TableComponent tableData={data?.event?.vehicles} columns={columns} sortBy='Bid Time Expire' setSelectedRowIds={setSelectedRowIds} />
 
   </div>
   </div>

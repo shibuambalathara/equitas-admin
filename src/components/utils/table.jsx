@@ -1,12 +1,19 @@
 import SearchUser from "./search";
-import { useTable,useSortBy,usePagination,useGlobalFilter } from "react-table"
-import PaginationComponent from "../utils/pagination";
+import { useTable,useSortBy,usePagination,useGlobalFilter, useRowSelect } from "react-table"
+import PaginationComponent from "./pagination";
 import { ConvertToExcel } from "./excelFormat";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFileArrowDown } from "@fortawesome/free-solid-svg-icons";
+import { useEffect, useState } from "react";
 
-const TableComponent = ({tableData,columns,sortBy}) => {
 
+
+
+
+const TableComponent = (prop) => {
+
+
+const {tableData,columns,sortBy}=prop
 
 
     const {
@@ -23,11 +30,12 @@ const TableComponent = ({tableData,columns,sortBy}) => {
       pageOptions,
       pageCount,
       gotoPage,
-      
+      toggleAllRowsSelected,
       setPageSize: setTablePageSize,
-      state: { pageIndex: tablePageIndex, pageSize: tablePageSize, },
+      state: { pageIndex: tablePageIndex, pageSize: tablePageSize},
       state,
       setGlobalFilter,
+      selectedFlatRows
     } =useTable(
       {
         columns,
@@ -40,10 +48,41 @@ const TableComponent = ({tableData,columns,sortBy}) => {
             },
           ],
         },
+        autoResetSelectedRows: false,
+        // setSelectedVehicleIds
       },
+  
       useGlobalFilter, // Add useGlobalFilter here
       useSortBy,
-      usePagination
+      usePagination,
+      useRowSelect,
+      hooks => {
+        hooks.visibleColumns.push(columns => [
+          {
+            id: "selection",
+            Header: ({ getToggleAllRowsSelectedProps }) => (
+              <input type="checkbox" {...getToggleAllRowsSelectedProps()} />
+            ),
+            Cell: ({ row }) => (
+              <input type="checkbox" {...row.getToggleRowSelectedProps()} 
+              checked={row.isChecked}
+              // onChange={() => {
+              //   if (row.isChecked) {
+              //     console.log("checked",row)
+              //     setSelectedVehicleIds([...selectedVehicleIds, row.original.id]);
+              //   } else {
+              //     // alert("unchecked",row.original.id)
+              //     console.log("unchecked",row)
+              //     setSelectedVehicleIds(selectedVehicleIds.filter((id) => id !== row.original.id));
+              //   }
+              // }}
+              />
+            )
+          },
+          ...columns
+        ]);
+      }
+
     );
     const { globalFilter, } = state;
     const paginationProps = {
@@ -56,12 +95,21 @@ const TableComponent = ({tableData,columns,sortBy}) => {
       pageCount,
       gotoPage,
       pageIndex,
-      tablePageIndex
+      tablePageIndex,
     };
+
+    // const selectedVehicles  = () => {
+    //   const selectedRows = tableData.filter(row => selectedRowIds[row.id]);
+    //   console.log("Selected rows:", selectedRows);
+ 
+    // };
+    useEffect(() => {
+      if(prop.setSelectedRowIds)
+     prop.setSelectedRowIds(selectedFlatRows.map(row => row.original.id));
+    }, [selectedFlatRows]);
 
   return (
     <div className=" mx-1 shadow-xl  ">
-    
 
     <div className="   h-fit">
       <div className=" flex flex-col justify-center ">
